@@ -34,6 +34,8 @@ RUN mkdir /run/nginx && \
     rm -r /var/www/localhost && \
     mkdir /var/www/html
 
+RUN mysql_install_db --user=mysql
+
 RUN echo "[include]" >> /etc/supervisord.conf && \
     echo "files = /etc/supervisor/conf.d/*.conf" >> /etc/supervisord.conf
 
@@ -44,8 +46,4 @@ COPY conf/nginx-php-fpm.conf /etc/nginx/conf.d/default.conf
 
 EXPOSE 80
 
-COPY entrypoint.sh /entrypoint.sh
-RUN chmod +x /entrypoint.sh
-
-ENTRYPOINT ["/entrypoint.sh"]
 CMD ["/usr/bin/supervisord", "-n", "-c", "/etc/supervisord.conf"]

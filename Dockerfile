@@ -28,7 +28,9 @@ RUN \
     curl -sS https://getcomposer.org/installer | php && \
     mv composer.phar /usr/local/bin/composer
 
-RUN mysql_install_db --user=mysql
+RUN \
+    chmod 1777 /var/tmp && \
+    mysql_install_db --user=mysql
 
 RUN \
     rm -rf /var/cache/apk/*
